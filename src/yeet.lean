@@ -272,3 +272,7 @@ theorem nyefari_conjecture : ∀ n > 0, n ≠ 2 → yeet (n * (n + 1) * (n - 1) 
     ],
     ring,
   end
+
+-- this is the grand prize
+theorem ultra_conjecture : ∀ (p > 0) (n > p), yeet ((n ^ p - n) / p) n p :=
+sorry
