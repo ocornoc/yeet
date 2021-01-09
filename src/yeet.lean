@@ -271,6 +271,30 @@ theorem nyefari_conjecture : ∀ n > 0, n ≠ 2 → yeet (n * (n + 1) * (n - 1) 
     ring,
   end
 
--- this is the grand prize
-theorem ultra_conjecture : ∀ (p > 0) (n > p), yeet ((n ^ p - n) / p) n p :=
-sorry
+lemma n_le_n_p (p n > 0) : n ≤ n ^ p :=
+by conv_lhs {rw ←pow_one n}; exact nat.pow_le_pow_of_le_right ‹_› ‹_›
+
+theorem ultra_p_dvd_poly : ∀ p n : ℕ, p.prime → p ∣ (n ^ p - n) :=
+begin
+  intros p n hp,
+  have hppos : 0 < p := nat.prime.pos hp,
+  cases n, { rw zero_pow hppos, exact dvd_zero p },
+  have h := @zmod.pow_card p hp n.succ,
+  rw ←nat.modeq.modeq_iff_dvd' (n_le_n_p _ _ hppos (dec_trivial : n.succ > 0)),
+  norm_cast at h,
+  rwa [zmod.eq_iff_modeq_nat, nat.modeq.comm] at h
+end
+
+theorem ultra_conjecture (p n : ℕ) (hn₀ : 0 < n) (hn₁ : n < (n ^ p - n) / p) (hp : p.prime) :
+  yeet ((n ^ p - n) / p) n p :=
+begin
+  norm_num [yeet, nat.digits_split],
+  have := nat.mod_eq_zero_of_dvd (ultra_p_dvd_poly _ n hp),
+  have hppos : 0 < p := nat.prime.pos hp,
+  rcases (mod_eq_c_iff_multiple_plus_c _ _ _ hppos).mp this with ⟨_, w, hw⟩,
+  norm_num at hw,
+  rw [ceil_log, nat.digits_of_lt _ _ hn₀ hn₁, hw, nat.mul_div_cancel _ hppos],
+  norm_num,
+  rwa [nat.sub_eq_iff_eq_add, add_comm, mul_comm] at hw,
+  exact n_le_n_p _ _ hppos hn₀
+end
