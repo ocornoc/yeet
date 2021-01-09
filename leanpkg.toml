@@ -1,8 +1,8 @@
 [package]
 name = "yeet"
 version = "0.1"
-lean_version = "leanprover-community/lean:3.23.0"
+lean_version = "leanprover-community/lean:3.24.0"
 path = "src"
 
 [dependencies]
-mathlib = {git = "https://github.com/leanprover-community/mathlib", rev = "e1138b008a469f80a761877c462bcf9f05680c25"}
+mathlib = {git = "https://github.com/leanprover-community/mathlib", rev = "faf1a98353b6435f5cecf1c91387c9540a9003f6"}
