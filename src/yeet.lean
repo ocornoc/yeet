@@ -40,7 +40,6 @@ lemma self_dvd_poly : ∀ n : ℕ, n.prime → n ∣ (3 ^ n - 3)
   begin
     have h := @zmod.pow_card_sub_one_eq_one (n + 4) hp 3 dec_trivial,
     norm_num at h,
-    change n + 4 ∣ 3 ^ (n + 4) - 3,
     apply_fun λ x, (x - 1) * 3 at h,
     norm_num [sub_self, sub_mul] at h,
     conv_lhs at h { congr, congr, skip, rw ←@pow_one (zmod (n + 4)) _ 3 },
@@ -262,7 +261,6 @@ theorem nyefari_conjecture : ∀ n > 0, n ≠ 2 → yeet (n * (n + 1) * (n - 1) 
     norm_num at hw,
     change (n + 3) ^ 3 with (n + 3) ^ (2 + 1),
     rw [pow_add, pow_one, pow_two],
-    norm_num [hw, nat.pow_add, add_mul_self_eq, ceil_log],
     have hw2 : (n + 3) * (n + 4) * (n + 2) / 3 = w,
       { apply_fun λ x, x / 3 at hw, simp at hw, exact hw },
     unfold ceil_log,
