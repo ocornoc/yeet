@@ -141,7 +141,7 @@ begin
 end
 
 @[simp]
-lemma nat.digits_of_base : ∀ b > 1,nat.digits b b = [0, 1]
+lemma nat.digits_of_base : ∀ b > 1, nat.digits b b = [0, 1]
 | 0     h := absurd h dec_trivial
 | 1     h := absurd h dec_trivial
 | (b+2) h := by norm_num [nat.digits, nat.digits_aux]; split
@@ -158,7 +158,7 @@ end
 
 -- proof by Shing Tak Lam
 theorem nat.digits_split : ∀ b n m,
-  nat.of_digits b (nat.digits b n ++nat.digits b m) = n + m * (b ^ ceil_log b n) :=
+  nat.of_digits b (nat.digits b n ++ nat.digits b m) = n + m * (b ^ ceil_log b n) :=
 begin
   intros b n m,
   rw [of_digits_append b (nat.digits b n) (nat.digits b m), 
@@ -200,7 +200,7 @@ theorem kendfrey_conjecture : ∀ n > 0, n ≠ 3 → yeet (n * (n - 1) / 2) n 2
 | 4 _ _ := by norm_num [yeet, nat.of_digits]
 | (n+5) h _ :=
   begin
-    norm_num [yeet,nat.digits_split],
+    norm_num [yeet, nat.digits_split],
     have := nat.mod_eq_zero_of_dvd (kendfrey_2_dvd_poly h),
     rcases (mod_eq_c_iff_multiple_plus_c _ 2 _ dec_trivial).mp this with ⟨_, w, hw⟩,
     norm_num at hw,
